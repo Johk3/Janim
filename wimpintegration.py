@@ -5,29 +5,34 @@ class Physics(GraphScene):
     CONFIG = {
         "function_color": PINK,
         "axes_color": BLUE,
-        "x_labeled_nums": range(0,12,2),
-        "y_labeled_nums": range(0,6,2),
+        "x_labeled_nums": range(0,8,1),
+        "y_labeled_nums": range(0,4,1),
         "x_axis_label": "$t/s$",
         "y_axis_label": "$a/ms^{-2}$",
+        "x_max": 7.5,
     }
 
     def construct(self):
         self.setup_axes(animate=True)
         func_graph = self.get_graph(self.func_to_graph, self.function_color)
         graph_lab = self.get_graph_label(func_graph, label="0.4x")
-        areaEquation = TextMobject("$$1/2(4*10) = 20ms$$")
+        areaEquation = TextMobject("$$\\frac{3*7.5}{2} = 11.25ms$$")
+        areaEquation2 = TextMobject("$$\\int_{0}^{7.5} 0.4x \\, dx$$")
+        areaEquation3 = TextMobject("$$[\\frac{0.4(7.5)^2}{2}] - [\\frac{0.4(0)^2}{2}] = 11.25ms$$")
         areaEquation.set_color_by_gradient("#33ccff","#ff00ff")
+        areaEquation2.set_color_by_gradient("#33ccff","#ff00ff")
+        areaEquation3.set_color_by_gradient("#33ccff","#ff00ff")
 
         # Visualizing the calculation of the area
-        x = self.coords_to_point(10, self.func_to_graph(10))
+        x = self.coords_to_point(7.5, self.func_to_graph(7.5))
         y = self.coords_to_point(0, self.func_to_graph(0))
-        yn = self.coords_to_point(0, self.func_to_graph(10))
+        yn = self.coords_to_point(0, self.func_to_graph(7.5))
 
-        vert_line = self.get_vertical_line_to_graph(10, func_graph, color=YELLOW)
+        vert_line = self.get_vertical_line_to_graph(7.5, func_graph, color=YELLOW)
         horz_line = Line(x,y, color=YELLOW)
         horz_line_normal = Line(x,yn, color=YELLOW)
 
-        point =  Dot(self.coords_to_point(10, self.func_to_graph(10)))
+        point =  Dot(self.coords_to_point(7.5, self.func_to_graph(7.5)))
         integral_triangle_up = Polygon(x,y,yn, fill_color=BLUE, fill_opacity=1)
         # --
 
@@ -39,7 +44,11 @@ class Physics(GraphScene):
         self.add_foreground_mobject(point)
         self.wait(1)
         self.play(ShowCreation(horz_line_normal), Write(areaEquation))
+        self.wait(1)
+        self.play(ReplacementTransform(areaEquation, areaEquation2))
         self.play(FadeIn(integral_triangle_up))
+        self.wait(2)
+        self.play(ReplacementTransform(areaEquation2, areaEquation3))
         self.wait(1)
         self.x_axis_label = "$t/s$"
         self.y_axis_label = "$v/ms^{-1}$"
@@ -50,10 +59,10 @@ class Physics(GraphScene):
         self.y_labeled_nums = range(-3,3,1)
         self.x_labeled_nums = range(0,9,1)
         self.graph_origin = 0 * DOWN + 4 * LEFT,
-        self.play(FadeOutAndShiftDown(vert_line), FadeOutAndShiftDown(horz_line), FadeOutAndShiftDown(point),
-                  FadeOutAndShiftDown(func_graph), FadeOutAndShiftDown(graph_lab), FadeOutAndShiftDown(horz_line_normal))
+        self.play(FadeOut(vert_line), FadeOut(horz_line), FadeOut(point),
+                  FadeOut(func_graph), FadeOut(graph_lab), FadeOut(horz_line_normal))
         self.wait(1)
-        self.play(FadeOut(integral_triangle_up), FadeOut(areaEquation), FadeOut(self.axes))
+        self.play(FadeOut(integral_triangle_up), FadeOut(areaEquation3), FadeOut(self.axes))
         self.wait(2)
         # -- Composition Scene 1--
 
