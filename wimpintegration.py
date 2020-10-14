@@ -31,7 +31,7 @@ class Physics(GraphScene):
         integral_triangle_up = Polygon(x,y,yn, fill_color=BLUE, fill_opacity=1)
         # --
 
-        # -- Composition --
+        # -- Composition Scene 1 --
         self.play(ShowCreation(func_graph), Write(graph_lab))
         self.wait(0.5)
         self.play(ShowCreation(vert_line))
@@ -52,18 +52,36 @@ class Physics(GraphScene):
         self.graph_origin = 0 * DOWN + 4 * LEFT,
         self.play(FadeOutAndShiftDown(vert_line), FadeOutAndShiftDown(horz_line), FadeOutAndShiftDown(point),
                   FadeOutAndShiftDown(func_graph), FadeOutAndShiftDown(graph_lab), FadeOutAndShiftDown(horz_line_normal))
+        self.wait(1)
+        self.play(FadeOut(integral_triangle_up), FadeOut(areaEquation), FadeOut(self.axes))
         self.wait(2)
-        # self.play(FadeOut(integral_triangle_up), FadeOut(areaEquation), FadeOut(self.axes))
-        # self.setup_axes(animate=True)
-        # self.wait(1)
+        # -- Composition Scene 1--
 
-        # func_graph_2 = self.get_graph(self.func_to_graph_2, self.function_color)
-        # graph_lab_2 = self.get_graph_label(func_graph_2, label="\\sin{x}")
-        # blocks = VGroup(*self.recursive_integration([1,3], 5))
-        # self.play(ShowCreation(func_graph_2), Write(graph_lab_2))
-        # self.play(VFadeIn(blocks))
-        # self.wait(2)
-        # -- Composition --
+        # -- Composition Scene 2 --
+        eq1 = TextMobject("$v(t) = u + at$")
+        eq2 = TextMobject("$$\\int_{a}^{b} v(t) \\,dt$$")
+        eq3 = TextMobject("$$\\int_{3}^{6} 2+9.81t \\,dt$$")
+        eq4 = ["$$[\\frac{9.81(6)^2}{2} + 2(6)] - [\\frac{9.81(3)^2}{2} + 2(3)]$$", "$ = $", "$138.4m$"]
+        eq4 = TextMobject(*eq4)
+        for i, item in enumerate(eq4):
+            if i != 0:
+                item.next_to(eq4[i-1], RIGHT)
+        eq4 = VGroup(*eq4)
+
+        eq1.shift(2*UP)
+        eq4.shift(LEFT)
+        eq2.set_color_by_gradient("#33ccff","#ff00ff")
+        eq3.set_color_by_gradient("#33ccff","#ff00ff")
+        eq4.set_color_by_gradient("#33ccff","#ff00ff")
+
+        self.play(Write(eq1), Write(eq2))
+        self.wait(2)
+        self.play(ReplacementTransform(eq2, eq3))
+        self.wait(2)
+        self.play(Transform(eq3, eq4[0]))
+        self.play(Write(eq4[1]), Write(eq4[-1]))
+        self.wait(2)
+        # -- Composition Scene 2 --
 
     def func_to_graph(self, x):
         return(0.4*x)
