@@ -1,5 +1,4 @@
 from manimlib.imports import *
-from manimlib.scene.scene import Scene
 # from math import sin, cos, tan, pi
 
 class Character(Scene):
