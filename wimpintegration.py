@@ -7,8 +7,8 @@ class Physics(GraphScene):
         "axes_color": BLUE,
         "x_labeled_nums": range(0,8,1),
         "y_labeled_nums": range(0,4,1),
-        "x_axis_label": "$t/s$",
-        "y_axis_label": "$a/ms^{-2}$",
+        "x_axis_label": "$\\text{t/s}$",
+        "y_axis_label": "$\\text{a/ms}^{-2}$",
         "x_max": 7.5,
     }
 
@@ -16,9 +16,9 @@ class Physics(GraphScene):
         self.setup_axes(animate=True)
         func_graph = self.get_graph(self.func_to_graph, self.function_color)
         graph_lab = self.get_graph_label(func_graph, label="0.4t")
-        areaEquation = TextMobject("$$\\frac{3*7.5}{2} = 11.25ms$$")
+        areaEquation = TextMobject("$$\\frac{3*7.5}{2} = 11.25\\text{ms}$$")
         areaEquation2 = TextMobject("$$\\int_{0}^{7.5} 0.4t \\, dt$$")
-        areaEquation3 = TextMobject("$$[\\frac{0.4(7.5)^2}{2}] - [\\frac{0.4(0)^2}{2}] = 11.3ms$$")
+        areaEquation3 = TextMobject("$$[\\frac{0.4(7.5)^2}{2}] - [\\frac{0.4(0)^2}{2}] = 11.3\\text{ms}$$")
         areaEquation.set_color_by_gradient("#33ccff","#ff00ff")
         areaEquation2.set_color_by_gradient("#33ccff","#ff00ff")
         areaEquation3.set_color_by_gradient("#33ccff","#ff00ff")
@@ -71,7 +71,7 @@ class Physics(GraphScene):
         eq1 = TextMobject("$v(t) = u + at$")
         eq2 = TextMobject("$$\\int_{a}^{b} v(t) \\,dt$$")
         eq3 = TextMobject("$$\\int_{3}^{6} 2+9.81t \\,dt$$")
-        eq4 = ["$$[\\frac{9.81(6)^2}{2} + 2(6)] - [\\frac{9.81(3)^2}{2} + 2(3)]$$", "$ = $", "$138.4m$"]
+        eq4 = ["$$[\\frac{9.81(6)^2}{2} + 2(6)] - [\\frac{9.81(3)^2}{2} + 2(3)]$$", "$ = $", "$138.4\\text{m}$"]
         eq4 = TextMobject(*eq4)
         for i, item in enumerate(eq4):
             if i != 0:

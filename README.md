@@ -21,8 +21,6 @@ To compile and preview the scenes on linux execute the commands below in the roo
 
 
 ## TODO
-3. Write the units in normal font.
-
 4. Use curved brackets instead of angular ones. \left (...  \right ). See, e.g., http://www.malinc.se/math/latex/basiccodeen.php for reference.
 
 5. Use \times as a multiplication sign
