@@ -18,7 +18,8 @@ class Physics(GraphScene):
         graph_lab = self.get_graph_label(func_graph, label="0.4t")
         areaEquation = TextMobject("$$\\frac{3*7.5}{2} = 11.25\\text{ms}$$")
         areaEquation2 = TextMobject("$$\\int_{0}^{7.5} 0.4t \\, dt$$")
-        areaEquation3 = TextMobject("$$[\\frac{0.4(7.5)^2}{2}] - [\\frac{0.4(0)^2}{2}] = 11.3\\text{ms}$$")
+        areaEquation3 = TextMobject("$$\\left(\\frac{0.4(7.5)^2}{2}\\right) - \\left(\\frac{0.4(0)^2}{2}\\right) = 11.3\\text{ms}$$")
+        areaEquation3.shift(RIGHT)
         areaEquation.set_color_by_gradient("#33ccff","#ff00ff")
         areaEquation2.set_color_by_gradient("#33ccff","#ff00ff")
         areaEquation3.set_color_by_gradient("#33ccff","#ff00ff")
@@ -34,7 +35,7 @@ class Physics(GraphScene):
         horz_line_normal = Line(x,yn, color=YELLOW)
 
         point =  Dot(self.coords_to_point(7.5, self.func_to_graph(7.5)))
-        integral_triangle_up = Polygon(x,y_under,y, fill_color=BLUE, fill_opacity=0.5)
+        area_under = Polygon(x,y_under,y, fill_color=BLUE, fill_opacity=0.5)
         # --
 
         # -- Composition Scene 1 --
@@ -47,7 +48,7 @@ class Physics(GraphScene):
         self.play(ShowCreation(horz_line_normal), Write(areaEquation))
         self.wait(1)
         self.play(ReplacementTransform(areaEquation, areaEquation2))
-        self.play(FadeIn(integral_triangle_up))
+        self.play(FadeIn(area_under))
         self.wait(2)
         self.play(ReplacementTransform(areaEquation2, areaEquation3))
         self.wait(1)
@@ -63,7 +64,7 @@ class Physics(GraphScene):
         self.play(FadeOut(vert_line), FadeOut(horz_line), FadeOut(point),
                   FadeOut(func_graph), FadeOut(graph_lab), FadeOut(horz_line_normal))
         self.wait(1)
-        self.play(FadeOut(integral_triangle_up), FadeOut(areaEquation3), FadeOut(self.axes))
+        self.play(FadeOut(area_under), FadeOut(areaEquation3), FadeOut(self.axes))
         self.wait(2)
         # -- Composition Scene 1--
 
@@ -71,7 +72,7 @@ class Physics(GraphScene):
         eq1 = TextMobject("$v(t) = u + at$")
         eq2 = TextMobject("$$\\int_{a}^{b} v(t) \\,dt$$")
         eq3 = TextMobject("$$\\int_{3}^{6} 2+9.81t \\,dt$$")
-        eq4 = ["$$[\\frac{9.81(6)^2}{2} + 2(6)] - [\\frac{9.81(3)^2}{2} + 2(3)]$$", "$ = $", "$138.4\\text{m}$"]
+        eq4 = ["$$\\left(\\frac{9.81(6)^2}{2} + 2(6)\\right) - \\left(\\frac{9.81(3)^2}{2} + 2(3)\\right)$$", "$ = $", "$138.4\\text{m}$"]
         eq4 = TextMobject(*eq4)
         for i, item in enumerate(eq4):
             if i != 0:

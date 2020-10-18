@@ -21,8 +21,6 @@ To compile and preview the scenes on linux execute the commands below in the roo
 
 
 ## TODO
-4. Use curved brackets instead of angular ones. \left (...  \right ). See, e.g., http://www.malinc.se/math/latex/basiccodeen.php for reference.
-
 5. Use \times as a multiplication sign
 
 6. Add the missing negative exponent to ms.
