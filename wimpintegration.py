@@ -16,9 +16,9 @@ class Physics(GraphScene):
         self.setup_axes(animate=True)
         func_graph = self.get_graph(self.func_to_graph, self.function_color)
         graph_lab = self.get_graph_label(func_graph, label="0.4t")
-        areaEquation = TextMobject("$$\\frac{3*7.5}{2} = 11.25\\text{ms}$$")
+        areaEquation = TextMobject("$$\\frac{3\\times 7.5}{2} = 11.25\\text{ms}$$")
         areaEquation2 = TextMobject("$$\\int_{0}^{7.5} 0.4t \\, dt$$")
-        areaEquation3 = TextMobject("$$\\left(\\frac{0.4(7.5)^2}{2}\\right) - \\left(\\frac{0.4(0)^2}{2}\\right) = 11.3\\text{ms}$$")
+        areaEquation3 = TextMobject("$$\\left(\\frac{0.4\\times 7.5^2}{2}\\right) - \\left(\\frac{0.4\\times 0^2}{2}\\right) = 11.3\\text{ms}$$")
         areaEquation3.shift(RIGHT)
         areaEquation.set_color_by_gradient("#33ccff","#ff00ff")
         areaEquation2.set_color_by_gradient("#33ccff","#ff00ff")
@@ -51,6 +51,8 @@ class Physics(GraphScene):
         self.play(FadeIn(area_under))
         self.wait(2)
         self.play(ReplacementTransform(areaEquation2, areaEquation3))
+        self.play(FadeOut(vert_line), FadeOut(horz_line), FadeOut(point),
+                  FadeOut(func_graph), FadeOut(graph_lab), FadeOut(horz_line_normal))
         self.wait(1)
         self.x_axis_label = "$t/s$"
         self.y_axis_label = "$v/ms^{-1}$"
@@ -61,8 +63,6 @@ class Physics(GraphScene):
         self.y_labeled_nums = range(-3,3,1)
         self.x_labeled_nums = range(0,9,1)
         self.graph_origin = 0 * DOWN + 4 * LEFT,
-        self.play(FadeOut(vert_line), FadeOut(horz_line), FadeOut(point),
-                  FadeOut(func_graph), FadeOut(graph_lab), FadeOut(horz_line_normal))
         self.wait(1)
         self.play(FadeOut(area_under), FadeOut(areaEquation3), FadeOut(self.axes))
         self.wait(2)
@@ -72,7 +72,7 @@ class Physics(GraphScene):
         eq1 = TextMobject("$v(t) = u + at$")
         eq2 = TextMobject("$$\\int_{a}^{b} v(t) \\,dt$$")
         eq3 = TextMobject("$$\\int_{3}^{6} 2+9.81t \\,dt$$")
-        eq4 = ["$$\\left(\\frac{9.81(6)^2}{2} + 2(6)\\right) - \\left(\\frac{9.81(3)^2}{2} + 2(3)\\right)$$", "$ = $", "$138.4\\text{m}$"]
+        eq4 = ["$$\\left(\\frac{9.81\\times 6^2}{2} + 2\\times 6\\right) - \\left(\\frac{9.81\\times 3^2}{2} + 2\\times 3\\right)$$", "$ = $", "$138.4\\text{m}$"]
         eq4 = TextMobject(*eq4)
         for i, item in enumerate(eq4):
             if i != 0:

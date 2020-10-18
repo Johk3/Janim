@@ -21,8 +21,6 @@ To compile and preview the scenes on linux execute the commands below in the roo
 
 
 ## TODO
-5. Use \times as a multiplication sign
-
 6. Add the missing negative exponent to ms.
 
 7. Typeset multiplication of numbers with symbols. E.g. \frac{9.81\times 6^2}{2}.
