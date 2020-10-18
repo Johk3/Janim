@@ -15,10 +15,10 @@ class Physics(GraphScene):
     def construct(self):
         self.setup_axes(animate=True)
         func_graph = self.get_graph(self.func_to_graph, self.function_color)
-        graph_lab = self.get_graph_label(func_graph, label="0.4x")
+        graph_lab = self.get_graph_label(func_graph, label="0.4t")
         areaEquation = TextMobject("$$\\frac{3*7.5}{2} = 11.25ms$$")
-        areaEquation2 = TextMobject("$$\\int_{0}^{7.5} 0.4x \\, dx$$")
-        areaEquation3 = TextMobject("$$[\\frac{0.4(7.5)^2}{2}] - [\\frac{0.4(0)^2}{2}] = 11.25ms$$")
+        areaEquation2 = TextMobject("$$\\int_{0}^{7.5} 0.4t \\, dt$$")
+        areaEquation3 = TextMobject("$$[\\frac{0.4(7.5)^2}{2}] - [\\frac{0.4(0)^2}{2}] = 11.3ms$$")
         areaEquation.set_color_by_gradient("#33ccff","#ff00ff")
         areaEquation2.set_color_by_gradient("#33ccff","#ff00ff")
         areaEquation3.set_color_by_gradient("#33ccff","#ff00ff")
@@ -27,13 +27,14 @@ class Physics(GraphScene):
         x = self.coords_to_point(7.5, self.func_to_graph(7.5))
         y = self.coords_to_point(0, self.func_to_graph(0))
         yn = self.coords_to_point(0, self.func_to_graph(7.5))
+        y_under = self.coords_to_point(7.5, self.func_to_graph(0))
 
         vert_line = self.get_vertical_line_to_graph(7.5, func_graph, color=YELLOW)
         horz_line = Line(x,y, color=YELLOW)
         horz_line_normal = Line(x,yn, color=YELLOW)
 
         point =  Dot(self.coords_to_point(7.5, self.func_to_graph(7.5)))
-        integral_triangle_up = Polygon(x,y,yn, fill_color=BLUE, fill_opacity=1)
+        integral_triangle_up = Polygon(x,y_under,y, fill_color=BLUE, fill_opacity=0.5)
         # --
 
         # -- Composition Scene 1 --

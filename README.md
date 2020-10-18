@@ -21,10 +21,6 @@ To compile and preview the scenes on linux execute the commands below in the roo
 
 
 ## TODO
-1. Change the variable in the first part from x to t and replace dx with dt.
-
-2. Highlight the lower triangle instead of the higher one.
-
 3. Write the units in normal font.
 
 4. Use curved brackets instead of angular ones. \left (...  \right ). See, e.g., http://www.malinc.se/math/latex/basiccodeen.php for reference.
