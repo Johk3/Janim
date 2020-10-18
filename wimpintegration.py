@@ -6,7 +6,7 @@ class Physics(GraphScene):
         "function_color": PINK,
         "axes_color": BLUE,
         "x_labeled_nums": range(0,8,1),
-        "y_labeled_nums": range(0,4,1),
+        "y_labeled_num^{-1}s": range(0,4,1),
         "x_axis_label": "$\\text{t/s}$",
         "y_axis_label": "$\\text{a/ms}^{-2}$",
         "x_max": 7.5,
@@ -16,9 +16,9 @@ class Physics(GraphScene):
         self.setup_axes(animate=True)
         func_graph = self.get_graph(self.func_to_graph, self.function_color)
         graph_lab = self.get_graph_label(func_graph, label="0.4t")
-        areaEquation = TextMobject("$$\\frac{3\\times 7.5}{2} = 11.25\\text{ms}$$")
+        areaEquation = TextMobject("$$\\frac{3\\times 7.5}{2} = 11.25\\text{ms}^{-1}$$")
         areaEquation2 = TextMobject("$$\\int_{0}^{7.5} 0.4t \\, dt$$")
-        areaEquation3 = TextMobject("$$\\left(\\frac{0.4\\times 7.5^2}{2}\\right) - \\left(\\frac{0.4\\times 0^2}{2}\\right) = 11.3\\text{ms}$$")
+        areaEquation3 = TextMobject("$$\\left(\\frac{0.4\\times 7.5^2}{2}\\right) - \\left(\\frac{0.4\\times 0^2}{2}\\right) = 11.3\\text{ms}^{-1}$$")
         areaEquation3.shift(RIGHT)
         areaEquation.set_color_by_gradient("#33ccff","#ff00ff")
         areaEquation2.set_color_by_gradient("#33ccff","#ff00ff")
