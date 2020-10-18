@@ -21,6 +21,3 @@ To compile and preview the scenes on linux execute the commands below in the roo
 
 
 ## TODO
-7. Typeset multiplication of numbers with symbols. E.g. \frac{9.81\times 6^2}{2}.
-
-8. Round results to the correct number of significant figures.
