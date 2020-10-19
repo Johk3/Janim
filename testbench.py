@@ -111,3 +111,29 @@ class RotationAndMove(Scene):
         )
         self.wait()
 # -- Rotation & Move --
+
+class RotateWithPath(Scene):
+    def construct(self):
+        square1, square2 = VGroup(
+            Square(color=PURPLE), Square(color=BLUE),
+        ).scale(0.5).set_x(-5)
+
+        path = Line(LEFT*5, RIGHT*5, stroke_opacity=0.5)
+        path.points[1:3] += UP*2
+
+        square2.save_state()
+
+        def update_rotate_move(mob, alpha):
+            square2.restore()
+            square2.move_to(path.point_from_proportion(alpha))
+            square2.rotate(3*PI*alpha)
+
+        self.add(square1, square2, path)
+        self.play(
+            # Purple Square
+            MoveAlongPath(square1, path),
+            Rotate(square1, 2*PI/3, about_point=square1.get_center()),
+            # Blue Square
+            UpdateFromAlphaFunc(square2, update_rotate_move),
+            run_time=10
+        )
