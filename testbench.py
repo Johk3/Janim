@@ -137,3 +137,194 @@ class RotateWithPath(Scene):
             UpdateFromAlphaFunc(square2, update_rotate_move),
             run_time=10
         )
+
+class UpdateValueTracker2(Scene):
+    CONFIG={
+        "line_1_color":ORANGE,
+        "line_2_color":PINK,
+        "lines_size":3.5,
+        "theta":PI/2,
+        "increment_theta":PI/2,
+        "final_theta":PI,
+        "radius":0.7,
+        "radius_color":YELLOW,
+    }
+    def construct(self):
+        # Set objets
+        theta = ValueTracker(self.theta)
+        line_1= Line(ORIGIN,RIGHT*self.lines_size,color=self.line_1_color)
+        line_2= Line(ORIGIN,RIGHT*self.lines_size,color=self.line_2_color)
+
+        line_2.rotate(theta.get_value(),about_point=ORIGIN)
+        line_2.add_updater(
+                lambda m: m.set_angle(
+                                    theta.get_value()
+                                )
+            )
+
+        angle= Arc(
+                    radius=self.radius,
+                    start_angle=line_1.get_angle(),
+                    angle =line_2.get_angle(),
+                    color=self.radius_color
+            )
+
+        # Show the objects
+
+        self.play(*[
+                ShowCreation(obj)for obj in [line_1,line_2,angle]
+            ])
+
+        # Set update function to angle
+
+        angle.add_updater(
+                    lambda m: m.become(
+                            Arc(
+                                radius=self.radius,
+                                start_angle=line_1.get_angle(),
+                                angle =line_2.get_angle(),
+                                color=self.radius_color
+                            )
+                        )
+            )
+        # Remember to add the objects again to the screen
+        # when you add the add_updater method.
+        self.add(angle)
+
+        self.play(theta.increment_value,self.increment_theta)
+        # self.play(theta.set_value,self.final_theta)
+
+        self.wait()
+
+class UpdateFunctionWithDt1(Scene):
+    CONFIG={
+        "amp": 2.3,
+        "t_offset": 0,
+        "rate": TAU/4,
+        "sine_graph_config":{
+            "x_min": -TAU/2,
+            "x_max": TAU/2,
+            "color": RED,
+            },
+        "wait_time":15,
+    }
+
+    def construct(self):
+
+        def update_curve(c, dt):
+            rate = self.rate * dt
+            c.become(self.get_sin_graph(self.t_offset + rate))
+            # Every frame, the t_offset increase rate / fps
+            self.t_offset += rate
+
+
+        c = self.get_sin_graph(0)
+
+        self.play(ShowCreation(c))
+        print(f"fps: {self.camera.frame_rate}")
+        print(f"dt: {1 / self.camera.frame_rate}")
+        print(f"rate: {self.rate / self.camera.frame_rate}")
+        print(f"cy_start: {c.points[0][1]}")
+        print(f"cy_end:   {c.points[-1][1]}")
+        print(f"t_offset: {self.t_offset}\n")
+
+        c.add_updater(update_curve)
+        self.add(c)
+
+        # The animation begins
+        self.wait(4)
+
+        c.remove_updater(update_curve)
+        self.wait()
+
+        print(f"cy_start:  {c.points[0][1]}")
+        print(f"cy_end:    {c.points[-1][1]}")
+        print(f"t_offset: {self.t_offset}\n")
+
+    def get_sin_graph(self, dx):
+        c = FunctionGraph(
+                lambda x: self.amp * np.sin(x - dx),
+                **self.sine_graph_config
+                )
+        return c
+
+class UpdateNumber(Scene):
+    def construct(self):
+        number_line = NumberLine(x_min=-1,x_max=1)
+        triangle = RegularPolygon(3,start_angle=-PI/2)\
+                   .scale(0.2)\
+                   .next_to(number_line.get_left(),UP,buff=SMALL_BUFF)
+        decimal = DecimalNumber(
+                0,
+                num_decimal_places=3,
+                include_sign=True,
+                unit="\\rm cm", # Change this with None
+            )
+
+        decimal.add_updater(lambda d: d.next_to(triangle, UP*0.1))
+        decimal.add_updater(lambda d: d.set_value(triangle.get_center()[0]))
+        #       You can get the value of decimal with: .get_value()
+
+        self.add(number_line,triangle,decimal)
+
+        self.play(
+                triangle.shift,RIGHT*2,
+                rate_func=there_and_back, # Change this with: linear,smooth
+                run_time=5
+            )
+
+        self.wait()
+
+class UpdateCurve(Scene):
+    def construct(self):
+        def f(dx=1):
+            return FunctionGraph(lambda x: 2*np.exp(-2 * (x - dx) ** 2))
+
+        c = f()
+        axes=Axes(y_min=-3, y_max=3)
+
+        def update_curve(c, alpha):
+            dx = interpolate(1, 4, alpha)
+            c_c = f(dx)
+            c.become(c_c)
+
+        self.play(ShowCreation(axes), ShowCreation(c))
+        self.wait()
+        self.play(UpdateFromAlphaFunc(c,update_curve),rate_func=there_and_back,run_time=4)
+        self.wait()
+
+class InterpolateColorScene(Scene):
+    def construct(self):
+        shape = Square(fill_opacity=1).scale(2)
+        shape.set_color(RED)
+
+        def update_color(mob,alpha):
+            dcolor = interpolate(0,mob.alpha_color,alpha)
+            mob.set_color(self.interpolate_color_mob(mob.initial_state,shape.new_color,dcolor))
+
+        self.add(shape)
+        self.change_init_values(shape,TEAL,0.5)
+        self.play(UpdateFromAlphaFunc(shape,update_color))
+
+        self.change_init_values(shape,PINK,0.9)
+        self.play(UpdateFromAlphaFunc(shape,update_color))
+        self.wait()
+
+    def interpolate_color_mob(self,mob,color,alpha):
+        return interpolate_color(mob.get_color(),color,alpha)
+
+    def change_init_values(self,mob,color,alpha):
+        mob.initial_state = mob.copy()
+        mob.new_color = color
+        mob.alpha_color = alpha
+
+class AddUpdaterFail(Scene):
+    def construct(self):
+        dot = Dot()
+        text = TextMobject("Label")\
+               .next_to(dot,RIGHT,buff=SMALL_BUFF)
+
+        self.add(dot,text)
+
+        self.play(dot.shift,UP*2)
+        self.wait()

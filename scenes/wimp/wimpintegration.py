@@ -6,7 +6,7 @@ class Physics(GraphScene):
         "function_color": PINK,
         "axes_color": BLUE,
         "x_labeled_nums": range(0,8,1),
-        "y_labeled_num^{-1}s": range(0,4,1),
+        "y_labeled_nums": range(0,4,1),
         "x_axis_label": "$\\text{t/s}$",
         "y_axis_label": "$\\text{a/ms}^{-2}$",
         "x_max": 7.5,
