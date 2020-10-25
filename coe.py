@@ -131,8 +131,22 @@ class CoE(GraphScene):
         self.wait(2)
         self.play(ShowCreation(path_t), Write(total_lab))
         self.wait(2)
-
+        self.play(FadeOut(dots_p), FadeOut(dots_k), FadeOut(path_p),
+                  FadeOut(path_k), FadeOut(kinetic_lab),
+                  FadeOut(gravitational_lab), FadeOut(path_t),
+                  FadeOut(total_lab), FadeOut(self.axes))
         # -- Composition Scene 4 --
+
+        # -- Composition Scene 5 --
+        eq = TextMobject("$E_k = \\frac{1}{2}mv^{2} + \\frac{1}{2}mr^2\\frac{V}{r}$")
+
+        self.play(Write(eq))
+        self.wait()
+        # Spherical Shell  = 2/3 mR^2
+        # Solid Sphere = 2/5 mR^2
+        # Cylindrical Shell = mR^2
+        # Solid Cylinder = 1/2 mR^2
+        # -- Composition Scene 5 --
 
 
     def return_coords_from_csv(self,file_name):
