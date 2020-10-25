@@ -14,7 +14,7 @@ pip3 install manimlib
 
 To compile and preview the scenes on linux execute the commands below in the root of the branch.
 ```
-./manim (file.py) (Scene) -pl
+manim (file.py) (Scene) -pl
 ```
 -p is for preview
 -l is for low quality
