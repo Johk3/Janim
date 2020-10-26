@@ -19,5 +19,3 @@ manim (file.py) (Scene) -pl
 -p is for preview
 -l is for low quality
 
-
-## TODO
