@@ -20,7 +20,7 @@ class CoE(GraphScene):
         self.setup_axes(animate=True)
 
         path = VMobject()
-        coords = self.return_coords_from_csv("/aus/jo/Anim/tuts/Janim/coe.csv")
+        coords = self.return_coords_from_csv("/Lab/Projects/Janim/coe.csv")
         dots = VGroup(*[Dot().move_to(self.coords_to_point(x, y)) for x,y,z in coords])
 
         path.set_points_smoothly([*[self.coords_to_point(x,y) for x,y,z in coords]])
@@ -51,19 +51,24 @@ class CoE(GraphScene):
         self.graph_origin = 4 * LEFT
         self.setup_axes(animate=True)
 
+        coords_c = self.return_coords_from_csv("/Lab/Projects/Janim/coe.csv", option="c")
         path_v = VMobject()
+        path_c = VMobject()
         dots_v = VGroup(*[Dot().move_to(self.coords_to_point(x, z)) for x,y,z in coords])
 
         path_v.set_points_smoothly([*[self.coords_to_point(x,z) for x,y,z in coords]])
+        path_c.set_points_smoothly([*[self.coords_to_point(x,c) for x, c in coords_c]])
         path_v.set_color(PINK)
+        path_c.set_color(GREEN)
 
         self.play(ShowCreation(dots_v))
         self.wait(2)
         self.play(ShowCreation(path_v), dots_v.set_opacity, 0.5)
         self.wait()
         self.play(FadeOut(dots_v))
+        self.play(ShowCreation(path_c))
         self.wait(2)
-        self.play(FadeOut(path_v), FadeOut(self.axes))
+        self.play(FadeOut(path_v), FadeOut(path_c), FadeOut(self.axes))
         self.wait()
         # -- Composition Scene 2 --
 
@@ -149,14 +154,20 @@ class CoE(GraphScene):
         # -- Composition Scene 5 --
 
 
-    def return_coords_from_csv(self,file_name):
+    def return_coords_from_csv(self,file_name, option="d"):
         import csv
         coords = []
         with open(file_name, 'r') as csvFile:
             reader = csv.reader(csvFile)
-            for row in reader:
-                x,y,z = row
-                coord = [float(x),float(y), round(float(z), 2)]
-                coords.append(coord)
+            if option == "d":
+                for row in reader:
+                    x,y,z,c = row
+                    coord = [float(x),float(y), round(float(z), 2)]
+                    coords.append(coord)
+            if option == "c":
+                for row in reader:
+                    x,y,z,c = row
+                    coord = [float(x),round(float(c), 2)]
+                    coords.append(coord)
         csvFile.close()
         return coords
