@@ -20,7 +20,7 @@ class CoE(GraphScene):
         self.setup_axes(animate=True)
 
         path = VMobject()
-        coords = self.return_coords_from_csv("/Lab/Projects/Janim/coe.csv")
+        coords = self.return_coords_from_csv("/aus/jo/Anim/tuts/Janim/coe.csv")
         dots = VGroup(*[Dot().move_to(self.coords_to_point(x, y)) for x,y,z in coords])
 
         path.set_points_smoothly([*[self.coords_to_point(x,y) for x,y,z in coords]])
@@ -51,7 +51,7 @@ class CoE(GraphScene):
         self.graph_origin = 4 * LEFT
         self.setup_axes(animate=True)
 
-        coords_c = self.return_coords_from_csv("/Lab/Projects/Janim/coe.csv", option="c")
+        coords_c = self.return_coords_from_csv("/aus/jo/Anim/tuts/Janim/coe.csv", option="c")
         path_v = VMobject()
         path_c = VMobject()
         dots_v = VGroup(*[Dot().move_to(self.coords_to_point(x, z)) for x,y,z in coords])
