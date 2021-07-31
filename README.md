@@ -1,8 +1,8 @@
 # Janim
 > Visual animations with the use of Manim
 ![](https://img.shields.io/badge/python-3.6-blue.svg)
-![](https://img.shields.io/pypi/status/Django.svg)
-
+![Character][face.png]
+![Example video][graph.png]
 ## Installation
 
 Packages:
